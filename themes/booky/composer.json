@@ -1,0 +1,20 @@
+{
+    "name": "andersbjorkland/silverstripe-booky-theme",
+    "description": "A simple SilverStripe theme for book reviews",
+    "type": "silverstripe-theme",
+    "authors": [
+        {
+            "name": "Anders Bjorkland",
+            "email": "contact@andersbjorkland.online"
+        }
+    ],
+    "require": {
+        "composer/installers": "*",
+        "silverstripe/framework": ">=3.5"
+    },
+    "extra": {
+        "expose": [
+            "dist"
+        ]
+	}
+}
