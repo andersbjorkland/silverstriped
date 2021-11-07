@@ -10,6 +10,8 @@
     <main class="container">
         <h1>Book Results</h1>
         <div class="container">
+
+        <% if $books %>
         <% loop $books %>
             
             <% if $Modulus(3) == 1 %>
@@ -17,7 +19,7 @@
             <% end_if %>
 
             <div class="col-12 col-sm-6 col-md-4 p-4">
-                <div class="card">
+                <div class="card h-100">
                     <img src="$image" alt="" class="card-img">
                     <div class="card-body shadow d-flex flex-column card-img-overlay h-50 p-4 mt-auto bg-primary bg-gradient text-white rounded">
                         <div class="card-title">
@@ -67,6 +69,27 @@
             <% end_if %>
 
         <% end_loop %>
+        <% loop $pagination %>
+        <div class="container gap-4 p-4">
+            <div class="row justify-content-center">
+                <% if $start.link %>
+                <a href="$start.link" class="col-1 btn btn-sm btn-secondary">|<</a>                        
+                <% end_if %>
+                <% if $previous.link %>
+                <a href="$previous.link" class="col-1 btn btn-sm btn-secondary"><</a>                        
+                <% end_if %>
+                <% if $next.link %>
+                <a href="$next.link" class="col-1 btn btn-sm btn-secondary">></a>                        
+                <% end_if %>
+                <% if $start.link %>
+                <div class="col-1"></div>
+                <% end_if %>
+            </div>
+        </div>    
+        <% end_loop %>
+        
+        <% end_if %>
+
         </div>
     </main>
     <% require themedJavascript('dist/bundle') %>
