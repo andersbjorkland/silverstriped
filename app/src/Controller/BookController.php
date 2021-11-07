@@ -67,6 +67,7 @@ class BookController extends Controller
                 $books = ArrayList::create($books);
 
                 $pagination = $this->paginator('/books?' . $basicQuery, $content['totalItems'], $startIndex, $maxResults);
+                $pagination['pages'] = ArrayList::create($pagination['pages']);
                 $pagination = ArrayList::create([$pagination]);
 
             }
@@ -81,7 +82,8 @@ class BookController extends Controller
             'current' => false,
             'previous' => false,
             'next' => false,
-            'pages' => 0,
+            'totalPages' => 0,
+            'pages' => false,
         ];
 
         $totalPages = ceil($count / $perPage);
@@ -115,7 +117,32 @@ class BookController extends Controller
             'page' => $nextIndex ? $currentPage + 1 : false,
             'link' => $nextIndex ? $query . '&startIndex=' . $nextIndex : false,
         ];
-        $pagination['pages'] = ceil($count / $perPage);
+
+        $totalPages = ceil($count / $perPage);  
+        $pagination['totalPages'] = $totalPages;
+        $pages = [];
+
+        for ($i = 0; $i < 3; $i++) {
+            $page = $currentPage + $i - 1;
+
+            if ($currentPage == 1) {
+                $page = $currentPage + $i;
+            }
+
+            if ($page > $totalPages) {
+                break;
+            }
+            if ($page < 1) {
+                continue;
+            }
+            
+            $pages[] = [
+                'page' => $page,
+                'link' => $query . '&startIndex=' . ($page - 1) * $perPage,
+                'currentPage' => $page == $currentPage
+            ];
+            $pagination['pages'] = $pages;
+        } 
 
         return $pagination;
     }
